@@ -1,6 +1,7 @@
 //// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.3;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract YouDefi {
     struct Terms {
@@ -56,5 +57,12 @@ contract YouDefi {
         require(block.timestamp >= Loans[_LoanID].repayByTimestamp, "Can not liquidate before the loan is due");
         payable(msg.sender).transfer(Loans[_LoanID].ethCollateralAmount);
         Loans[_LoanID].status = "Loan Defaulted";
+    }
+    
+}
+
+contract TokenCreator is ERC20 {
+    constructor(uint initialSupply, string memory name, string memory abbr) ERC20(name, abbr) {
+        _mint(msg.sender, initialSupply *10**18);
     }
 }
