@@ -1,0 +1,28 @@
+{
+  "name": "you-defi-backend",
+  "version": "1.0.0",
+  "description": "Backend Hardhat project containing smart contracts for YouDefi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjundevn/you-defi-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arjundevn/you-defi-backend/issues"
+  },
+  "homepage": "https://github.com/arjundevn/you-defi-backend#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "hardhat": "^2.10.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.1",
+    "dotenv": "^16.0.1"
+  }
+}
