@@ -1,29 +1,55 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-const hre = require("hardhat");
+// This is a script for deploying your contracts. You can adapt it to deploy
 
+const { artifacts } = require("hardhat");
+const { ethers} = require("hardhat");
+
+// yours, or create new ones.
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+  const [deployer] = await ethers.getSigners();
+  console.log(
+    "Deploying the contracts with the account:",
+    await deployer.getAddress()
+  );
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  await lock.deployed();
+  const YouDefi = await ethers.getContractFactory("YouDefi");
+  const youDefi = await YouDefi.deploy();
+  await youDefi.deployed();
+  console.log("\YouDefi address:", youDefi.address);
 
-  console.log("Lock with 1 ETH deployed to:", lock.address);
-}
+// function saveFrontendFiles() {
+  const fs = require("fs");
+  const deployedContractsDir = __dirname + "/../deployedContracts";
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+  if (!fs.existsSync(deployedContractsDir)) {
+    fs.mkdirSync(deployedContractsDir);
+  }
+
+  fs.writeFileSync(
+    deployedContractsDir + "/contract-address.json",
+    JSON.stringify({ YouDefi: youDefi.address }, undefined, 2),
+  //   JSON.stringify({ MultiSig: multiSig.address }, undefined, 2)
+  );
+  
+  // const TokenArtifact = artifacts.readArtifactSync("Token");
+  // const MultiSigArtifact = artifacts.readArtifactSync("MultiSig");
+  
+  // fs.writeFileSync(
+  //   contractsDir + "/Token.json",
+  //   JSON.stringify(TokenArtifact, null, 2)
+  // );
+
+  // fs.writeFileSync(
+  //   contractsDir + "/MultiSig.json",
+  //   JSON.stringify(MultiSigArtifact, null, 2)
+  // );
+  }
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });

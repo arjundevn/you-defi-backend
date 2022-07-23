@@ -1,3 +1,4 @@
+require("@nomiclabs/hardhat-waffle");
 require('dotenv').config({path:__dirname+'/.env'})
 
 // The next line is part of the sample project, you don't need it in your
@@ -11,7 +12,7 @@ module.exports = {
   defaultNetwork: "mumbai",
   networks: {
     mumbai: {
-      url: `https://matic-mumbai.chainstacklabs.com`,
+      url: `https://polygon-mumbai.g.alchemy.com/v2/dqFqjhoWwfYYTCZoj__HMztYBmQd2BH7`,
       chainId: 80001,
       accounts: [`${process.env.DEPLOYER_PRIVATE_KEY}`]
     }

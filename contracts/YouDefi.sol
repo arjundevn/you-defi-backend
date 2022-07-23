@@ -3,7 +3,7 @@ pragma solidity ^0.8.3;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // import { DAI } from "./Dai.sol";
 
-contract Loan {
+contract YouDefi {
     struct Terms {
         uint256 loanDaiAmount;
         uint feeDaiAmount;
@@ -20,11 +20,11 @@ contract Loan {
     address payable public borrower;
     IERC20 token;
 
-    constructor(Terms memory _terms){
-        terms = _terms;
+    constructor(){
+        // terms = _terms;
         // daiAddress = _daiAddress;
-        lender = payable(msg.sender);
-        state = LoanState.Created;
+        // lender = payable(msg.sender);
+        // state = LoanState.Created;
         token = IERC20(0xd9145CCE52D386f254917e481eB44e9943F39138); 
     }
 
