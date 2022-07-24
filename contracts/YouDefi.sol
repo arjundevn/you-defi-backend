@@ -18,6 +18,15 @@ contract YouDefi {
     uint public numOfLoans = 0;       // Total number of loans in the smart contract
     mapping (uint => Terms) public Loans; // Loan ID
 
+    struct Influencer {
+        address tokenAddress;
+        address owner;
+        string youtubeChannelLink;
+    }
+
+    uint public numOfInfluencers = 0;       // Total number of influencers in the smart contract
+    mapping (uint => Influencer) public Influencers; // Influencer ID
+
     function getTimestamp() public view returns(uint){
         return block.timestamp;
     }
@@ -59,10 +68,17 @@ contract YouDefi {
         Loans[_LoanID].status = "Loan Defaulted";
     }
     
+    function registerInfluencer(string memory _youtubeChannelLink, string memory _tokenName, string memory _symbol) public {
+        numOfInfluencers++;
+        TokenCreator token = new TokenCreator(_tokenName, _symbol);
+        Influencers[numOfInfluencers].youtubeChannelLink = _youtubeChannelLink;
+        Influencers[numOfInfluencers].tokenAddress = address(token);
+        Influencers[numOfInfluencers].owner = msg.sender;
+    }
 }
 
 contract TokenCreator is ERC20 {
-    constructor(uint initialSupply, string memory name, string memory abbr) ERC20(name, abbr) {
-        _mint(msg.sender, initialSupply *10**18);
+    constructor(string memory name, string memory abbr) ERC20(name, abbr) {
+        _mint(msg.sender, 100000 *10**18);
     }
 }
